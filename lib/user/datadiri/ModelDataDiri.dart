@@ -1,5 +1,6 @@
 class DataDiri {
 
+  final String id_pengguna;
   final String id_datadiri;
   final String id_datakehamilan;
   final String nama_lengkap;
@@ -18,6 +19,7 @@ class DataDiri {
   final String anak_hidup;
 
   DataDiri({
+    required this.id_pengguna,
     required this.id_datadiri,
     required this.id_datakehamilan,
     required this.nama_lengkap,
@@ -39,6 +41,7 @@ class DataDiri {
   factory DataDiri.fromJson(Map<String, dynamic> json) {
     return DataDiri(
 
+      id_pengguna: json['id_pengguna'],
       id_datadiri: json['id_datadiri'],
       id_datakehamilan: json['id_datakehamilan'],
       nama_lengkap: json['nama_lengkap'],

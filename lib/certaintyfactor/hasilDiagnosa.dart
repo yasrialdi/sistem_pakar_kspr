@@ -3,11 +3,12 @@ import 'package:sistem_pakar_kspr/admin/home/diagnosa/RepositoryDiagnosa.dart';
 import 'hasilDiagnosaDetail.dart';
 
 class PageHasilDiagnosa extends StatefulWidget {
-  final String id, nama_diagnosacf, nilaicf, nama_diagnosafc, nilaifc;
+  final String idcf, idfc, nama_diagnosacf, nilaicf, nama_diagnosafc, nilaifc;
 
   const PageHasilDiagnosa({
     Key? key,
-    required this.id,
+    required this.idcf,
+    required this.idfc,
     required this.nama_diagnosacf,
     required this.nilaicf,
     required this.nama_diagnosafc,
@@ -119,14 +120,13 @@ class _PageHasilDiagnosaState extends State<PageHasilDiagnosa> {
                             ),
                             onPressed: () async {
 
-                              var id = widget.id;
+                              var idcf = widget.idcf;
 
-                              print(id);
-                              print(id);
+                              print(idcf);
                               print(widget.nama_diagnosacf);
 
                               var responsecf = await repository
-                                  .PostGetDetailDiagnosa(id);
+                                  .PostGetDetailDiagnosa(idcf);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -167,14 +167,13 @@ class _PageHasilDiagnosaState extends State<PageHasilDiagnosa> {
                             ),
                             onPressed: () async {
 
-                              var id = widget.id;
+                              var idfc = widget.idfc;
 
-                              print(id);
-                              print(id);
-                              print(widget.nama_diagnosacf);
+                              print(idfc);
+                              print(widget.nama_diagnosafc);
 
                               var responseDetail = await repository
-                                  .PostGetDetailDiagnosa(id);
+                                  .PostGetDetailDiagnosa(idfc);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

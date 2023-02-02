@@ -1,10 +1,12 @@
 class DataTBJ {
+  final String id_pengguna;
   final String id_tbj;
   final String tfu;
   final String nilai_n;
   final String nilai_tbj;
 
   DataTBJ({
+    required this.id_pengguna,
     required this.id_tbj,
     required this.tfu,
     required this.nilai_n,
@@ -13,6 +15,7 @@ class DataTBJ {
 
   factory DataTBJ.fromJson(Map<String, dynamic> json) {
     return DataTBJ(
+      id_pengguna: json['id_pengguna'],
       id_tbj: json['id_tbj'],
       tfu: json['tfu'],
       nilai_n: json['nilai_n'],

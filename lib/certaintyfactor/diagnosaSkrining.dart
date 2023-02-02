@@ -6,14 +6,14 @@ import 'package:sistem_pakar_kspr/certaintyfactor/diagnosaRepository.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/gejalaModel.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/hasilDiagnosa.dart';
 
-class PageCFcoba extends StatefulWidget {
-  const PageCFcoba({Key? key}) : super(key: key);
+class PageCFRevisi extends StatefulWidget {
+  const PageCFRevisi({Key? key}) : super(key: key);
 
   @override
-  State<PageCFcoba> createState() => _PageCFcobaState();
+  State<PageCFRevisi> createState() => _PageCFRevisiState();
 }
 
-class _PageCFcobaState extends State<PageCFcoba> {
+class _PageCFRevisiState extends State<PageCFRevisi> {
   List<Gejala> listGejala = [];
   late List<bool> _isChecked;
   RepositoryGejalaDiagnosa repository = RepositoryGejalaDiagnosa();
@@ -74,7 +74,7 @@ class _PageCFcobaState extends State<PageCFcoba> {
                 return WillPopScope(
                   onWillPop: () => Future.value(false),
                   child: AlertDialog(
-                    title: Text("Apakah anda hamil?"),
+                    title: Text("Apakah anda hamil"),
                     actions: <Widget>[
                       FlatButton(
                         child: new Text("Ya"),
@@ -97,7 +97,7 @@ class _PageCFcobaState extends State<PageCFcoba> {
                 );
               },
             )));
-
+    // _isChecked[0] = true;
     super.initState();
   }
 

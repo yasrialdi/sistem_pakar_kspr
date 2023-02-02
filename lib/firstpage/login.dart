@@ -282,7 +282,7 @@ class _PageLoginState extends State<PageLogin> {
                     InkWell(
                       onTap: () {
                         //Register
-                        Navigator.of(context).pushReplacement(
+                        Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) => PageLoginRegister()));
                       },
                       child: Text(

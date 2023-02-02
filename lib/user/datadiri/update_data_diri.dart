@@ -64,7 +64,6 @@ class _PageUpdateDataDiriState extends State<PageUpdateDataDiri> {
   final _namasuami = TextEditingController();
   final _usiasuami = TextEditingController();
   final _pekerjaansuami = TextEditingController();
-  final _agama = TextEditingController();
   final _notelp = TextEditingController();
 
   List<String> listAgama = ["Islam", "Kristen", "Protestan", "Budha", "Hindu"];
@@ -86,7 +85,7 @@ class _PageUpdateDataDiriState extends State<PageUpdateDataDiri> {
     _namasuami.text = widget.namasuami;
     _usiasuami.text = widget.usiasuami;
     _pekerjaansuami.text = widget.pekerjaansuami;
-    // nAgama = widget.agama;
+    nAgama = widget.agama;
     _notelp.text = widget.notelp;
 
     SharedPreferences.getInstance().then((value) => preferences = value);
@@ -507,9 +506,21 @@ class _PageUpdateDataDiriState extends State<PageUpdateDataDiri> {
                               preferences.getString("id_pengguna")!;
 
                           // print(widget.id_datadiri);
+                          // print(id_pengguna);
+                          // print(_nama.text);
+                          // print(_tgllahir.text);
+                          // print(_alamat.text);
+                          // print(_pekerjaan.text);
+                          // print(_pendidikan.text);
+                          // print(_namasuami.text);
+                          // print(_usiasuami.text);
+                          // print(_pekerjaansuami.text);
+                          // print(nAgama);
+                          // print(_notelp.text);
+
                           await repository.UpdateDataDiri(
                               widget.id_datadiri.toString(),
-                              id_pengguna,
+                              id_pengguna.toString(),
                               _nama.text,
                               _tgllahir.text,
                               _alamat.text,

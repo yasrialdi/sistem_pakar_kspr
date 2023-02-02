@@ -146,9 +146,11 @@ class _PageLoginRegisterState extends State<PageLoginRegister> {
                           await repository.postDataPengguna(
                               _username.text, _password.text);
 
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => PageLogin()));
+                          Navigator.of(context).pop();
+
+                          // Navigator.of(context)
+                          //     MaterialPageRoute(
+                          //         builder: (context) => PageLogin()));
                         }
                       },
                       color: Colors.white,

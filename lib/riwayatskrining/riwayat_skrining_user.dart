@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sistem_pakar_kspr/riwayatskrining/ModelRiwayat.dart';
 import 'package:sistem_pakar_kspr/riwayatskrining/RepositoryRiwayat.dart';
 
 class PageRiwayatSkriningUser extends StatefulWidget {
-
-
   const PageRiwayatSkriningUser({Key? key}) : super(key: key);
 
   @override
@@ -14,10 +13,25 @@ class PageRiwayatSkriningUser extends StatefulWidget {
 
 class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
   List<DataRiwayat> listRiwayat = [];
-  RepositoryRiwayat repository = RepositoryRiwayat();
-  getDataDiagnosa() async {
-    listRiwayat = await repository.getDataRiwayatUser();
+  RepositoryRiwayat repositoryRiwayat = RepositoryRiwayat();
+  // DataRiwayat? dataRiwayatUser;
+  getDataRiwayat() async {
+    listRiwayat = await repositoryRiwayat.getDataRiwayatUser() ?? [];
+    listRiwayat = listRiwayat.where((element) => element.id_pengguna == id_pengguna).toList();
+
+    // dataRiwayatUser = (await repositoryRiwayat.getDataRiwayatUser())?.firstWhere((element) => element.id_pengguna == id_pengguna);
+    // listRiwayat = await repository.getDataRiwayat();
+    print('id_pengguna ' + id_pengguna);
     setState(() {});
+  }
+
+  String id_pengguna = "";
+
+  Future getAkun() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      id_pengguna = preferences.getString('id_pengguna')!;
+    });
   }
 
   void _showDetailRiwayat(DataRiwayat dataRiwayat) {
@@ -34,13 +48,13 @@ class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
                 children: [
                   Center(
                       child: Text(
-                    "${dataRiwayat.nama_diagnosa}",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Ubuntu',
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  )),
+                        "${dataRiwayat.nama_diagnosa}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
                   SizedBox(height: 30),
                   Text("Deskripsi :"),
                   Text("${dataRiwayat.deskripsi_diagnosa}"),
@@ -66,7 +80,7 @@ class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
 
   @override
   void initState() {
-    // getDataDiagnosa();
+    getAkun().then((_) => getDataRiwayat());
     super.initState();
   }
 
@@ -118,13 +132,13 @@ class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
                                       horizontal: 10, vertical: 5),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(height: 5),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             '${listRiwayat[index].metode}',
@@ -161,7 +175,7 @@ class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
                                       SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.end,
                                         children: [
                                           SizedBox(width: 10),
                                           MaterialButton(
@@ -171,7 +185,7 @@ class _PageRiwayatSkriningUserState extends State<PageRiwayatSkriningUser> {
                                             },
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(5),
+                                              BorderRadius.circular(5),
                                             ),
                                             height: 15,
                                             minWidth: 30,

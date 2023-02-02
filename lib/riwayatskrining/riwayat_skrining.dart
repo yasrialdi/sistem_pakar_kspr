@@ -159,8 +159,16 @@ class _PageRiwayatSkriningState extends State<PageRiwayatSkrining> {
                                       SizedBox(height: 20),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Text(
+                                            "${listRiwayat[index].nama}",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'Ubuntu',
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                           SizedBox(width: 10),
                                           MaterialButton(
                                             onPressed: () {

@@ -11,72 +11,21 @@ import 'package:sistem_pakar_kspr/usiakandungan/model_usiakandungan.dart';
 class RepositoryUsiaKandungan {
 
   final UrlTambahusiaa = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/tambah_data_usia.php';
+  final baseUrl = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/get_data_usia_kandungan.php';
 
-  // Future getDataUsiaKandungan() async {
-  //   try {
-  //     final response = await http.get(Uri.parse(baseUrl));
-  //
-  //     if (response.statusCode == 200) {
-  //       Iterable it = jsonDecode(response.body);
-  //       List<DataUsiaKan> datausia = it.map((e) => DataUsiaKan.fromJson(e)).toList();
-  //       return datausia;
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
+  Future getDataUsiaKandungan() async {
+    try {
+      final response = await http.get(Uri.parse(baseUrl));
 
-  // Future<bool> deletegejala(String id) async {
-  //   try {
-  //     final response = await http
-  //         .post(Uri.parse(UrlDeleteGejala), body: {'id_gejala': id});
-  //
-  //     if (response.statusCode == 200) {
-  //       return true;
-  //     }
-  //   } catch (e) {
-  //     log(e.toString(), name: 'deletegejala');
-  //   }
-  //   return false;
-  // }
-
-  // Future<bool> updateuser(
-  //     String id ,String kode, String namagjl, String nilaicf) async {
-  //   try {
-  //     final response = await http
-  //         .post(Uri.parse(UrlUpdateGejala), body: {
-  //       "id_gejala": id,
-  //       "kode_gejala": kode,
-  //       "nama_gejala": namagjl,
-  //       "nilai_cf": nilaicf,
-  //     });
-  //
-  //     if (response.statusCode == 200) {
-  //       Fluttertoast.showToast(
-  //           msg: "Update Data Gejala Berhasil",
-  //           toastLength: Toast.LENGTH_SHORT,
-  //           gravity: ToastGravity.CENTER,
-  //           timeInSecForIosWeb: 3,
-  //           backgroundColor: Colors.white,
-  //           textColor: Colors.black,
-  //           fontSize: 16
-  //       );
-  //     } else {
-  //       Fluttertoast.showToast(
-  //           msg: "Update Data Gejala Gagal",
-  //           toastLength: Toast.LENGTH_SHORT,
-  //           gravity: ToastGravity.CENTER,
-  //           timeInSecForIosWeb: 3,
-  //           backgroundColor: Colors.white,
-  //           textColor: Colors.black,
-  //           fontSize: 16
-  //       );
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  //   return false;
-  // }
+      if (response.statusCode == 200) {
+        Iterable it = jsonDecode(response.body)['aturan'];
+        List<DataUsiaKan> dataUsia = it.map((e) => DataUsiaKan.fromJson(e)).toList();
+        return dataUsia;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   Future postDataTambahUsiaKandungan(
       String id_pengguna, String tgl_hpht) async {

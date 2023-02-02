@@ -1,23 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/diagnosaRepository.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/gejalaModel.dart';
-import 'package:sistem_pakar_kspr/certaintyfactor/hasilDiagnosa.dart';
 
-class PageCFcoba extends StatefulWidget {
-  const PageCFcoba({Key? key}) : super(key: key);
+class PageDiagnosaFC extends StatefulWidget {
+  const PageDiagnosaFC({Key? key}) : super(key: key);
 
   @override
-  State<PageCFcoba> createState() => _PageCFcobaState();
+  State<PageDiagnosaFC> createState() => _PageDiagnosaFCState();
 }
 
-class _PageCFcobaState extends State<PageCFcoba> {
+class _PageDiagnosaFCState extends State<PageDiagnosaFC> {
   List<Gejala> listGejala = [];
   late List<bool> _isChecked;
   RepositoryGejalaDiagnosa repository = RepositoryGejalaDiagnosa();
-  Future<void> getDataGejala() async {
+  getDataGejala() async {
     listGejala = await repository.getDataCF();
     _isChecked = List<bool>.filled(listGejala.length, false);
     setState(() {});
@@ -45,7 +43,8 @@ class _PageCFcobaState extends State<PageCFcoba> {
                       "${dataGejala.nama_gejala}\n"
                       "Deskripsi Gejala"
                       " : "
-                      "${dataGejala.deskripsi_gejala}\n")
+                      "${dataGejala.deskripsi_gejala}\n"
+                  )
                 ],
               ),
             ),
@@ -65,39 +64,8 @@ class _PageCFcobaState extends State<PageCFcoba> {
 
   @override
   void initState() {
+    getDataGejala();
     SharedPreferences.getInstance().then((value) => preferences = value);
-    getDataGejala().then((value) =>
-        SchedulerBinding.instance!.addPostFrameCallback((_) => showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) {
-                return WillPopScope(
-                  onWillPop: () => Future.value(false),
-                  child: AlertDialog(
-                    title: Text("Apakah anda hamil?"),
-                    actions: <Widget>[
-                      FlatButton(
-                        child: new Text("Ya"),
-                        onPressed: () {
-                          setState(() {
-                            _isChecked[0] = true;
-                          });
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FlatButton(
-                        child: new Text("Tidak"),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              },
-            )));
-
     super.initState();
   }
 
@@ -107,7 +75,7 @@ class _PageCFcobaState extends State<PageCFcoba> {
       backgroundColor: Color(0xffDCE5F0),
       appBar: AppBar(
         title: Text(
-          'Skrining Kehamilan Resiko Tinggi',
+          'Diagnosa Certainty Factor',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -126,9 +94,7 @@ class _PageCFcobaState extends State<PageCFcoba> {
           key: formKey,
           child: Column(
             children: [
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10,),
               Center(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5, right: 5),
@@ -140,16 +106,15 @@ class _PageCFcobaState extends State<PageCFcoba> {
                           topLeft: Radius.circular(5)),
                       color: Colors.white,
                     ),
-                    child: Center(
-                      child: Text(
-                        'Pilih Gejala Yang Dialami',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Ubuntu',
-                          color: Colors.black,
-                        ),
+                    child: Center(child: Text(
+                      'Pilih Gejala Yang Dialami',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.black,
                       ),
+                    ),
                     ),
                   ),
                 ),
@@ -174,9 +139,7 @@ class _PageCFcobaState extends State<PageCFcoba> {
                               return CheckboxListTile(
                                 title: Row(
                                   children: [
-                                    Expanded(
-                                        child: Text(
-                                            "${listGejala[index].nama_gejala}")),
+                                    Expanded(child: Text("${listGejala[index].nama_gejala}")),
                                     FlatButton(
                                       onPressed: () {
                                         _showDialogDetail(listGejala[index]);
@@ -193,83 +156,59 @@ class _PageCFcobaState extends State<PageCFcoba> {
                                       ),
                                     ),
                                   ],
+
                                 ),
                                 value: _isChecked[index],
                                 onChanged: (val) {
-                                  if (index > 0) {
-                                    setState(() => _isChecked[index] = val!);
-                                  }
+                                  setState(
+                                        () {
+                                      _isChecked[index] = val!;
+                                    },
+                                  );
                                 },
                               );
                             },
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        MaterialButton(
+                        ),SizedBox(height: 10),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.pinkAccent,
+                          ),
                           onPressed: () async {
-                            if (formKey.currentState!.validate()) {
+                            if (formKey.currentState!.validate()){
                               setState(() {
                                 isloading = true;
                               });
-                              List<int> hasilArray =
-                                  _isChecked.map((e) => e ? 1 : 0).toList();
+                              List<int> hasilArray = _isChecked.map((e) => e? 1 : 0).toList();
                               List<String> hasilGejala = [];
-                              for (var i = 0; i < hasilArray.length; i++) {
-                                if (hasilArray[i] == 1) {
+                              for(var i = 0; i<hasilArray.length; i++){
+                                if (hasilArray[i] == 1){
                                   hasilGejala.add(listGejala[i].id_gejala);
                                 }
                               }
                               String hasil = hasilArray.join("#");
                               String hasil2 = hasilGejala.join("#");
-                              String id_pengguna =
-                                  preferences.getString("id_pengguna")!;
+                              print(hasil);
+                              String id_pengguna = preferences.getString("id_pengguna")!;
+                              print(id_pengguna);
 
-                              var responsecf = await repository
-                                  .postDataTambahCF(id_pengguna, hasil);
-                              var responsefc = await repository
-                                  .postDataTambahFC(id_pengguna, hasil2);
-
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => PageHasilDiagnosa(
-                                            idcf: responsecf["id_diagnosa"],
-                                            idfc: responsefc["id_diagnosa"],
-                                            nama_diagnosacf:
-                                                responsecf["nama_diagnosa"],
-                                            nilaicf: responsecf["nilai"],
-                                            nama_diagnosafc:
-                                                responsefc["nama_diagnosa"],
-                                            nilaifc: responsefc["nilai"],
-                                          )));
+                              await repository.postDataTambahFC(id_pengguna,hasil2);
+                              //
+                              //
+                              // Navigator.of(context).pushReplacement(
+                              //     MaterialPageRoute(builder: (context) => PageNavBottomBarAdmin()));
                             }
                           },
-                          color: Colors.pinkAccent,
-                          height: 35,
-                          minWidth: 100,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+                          child: Text(
+                            'SIMPAN',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.white),
                           ),
-                          child: (isloading)
-                              ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 1.5,
-                                  ))
-                              : const Text(
-                                  'SIMPAN',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.white),
-                                ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        )
+                        SizedBox(height: 10,)
                       ],
                     ),
                   ),
@@ -281,4 +220,6 @@ class _PageCFcobaState extends State<PageCFcoba> {
       ),
     );
   }
+
 }
+

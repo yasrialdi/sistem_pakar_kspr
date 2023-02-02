@@ -7,9 +7,11 @@ import 'ModelDataDiri.dart';
 
 class RepositoryDatadiri {
 
+  final UrlGetDataDirii = 'http://192.168.172.187/proyekakhir/get_data_diri.php';
   final UrlGetDataDiri = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/get_data_diri.php';
   final UrlGetDataKehamilan = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/get_data_kehamilan.php';
   final UrlPostDataDiri = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/tambah_data_diri.php';
+  final UrlUpdateDataDirii = 'http://192.168.172.187/proyekakhir/update_data_diri.php';
   final UrlUpdateDataDiri = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/update_data_diri.php';
   final UrlPostDataKehamilan = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/tambah_data_kehamilan.php';
   final UrlUpdateDataKehamilan = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/update_data_kehamilan.php';
@@ -28,7 +30,21 @@ class RepositoryDatadiri {
     }
   }
 
-  Future getDataKehamilan() async {
+  Future<List<DataDiri>?> getDataDiriUser() async {
+    try {
+      final response = await http.get(Uri.parse(UrlGetDataDiri));
+
+      if (response.statusCode == 200) {
+        Iterable it = jsonDecode(response.body);
+        List<DataDiri> datadiri = it.map((e) => DataDiri.fromJson(e)).toList();
+        return datadiri;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<List<DataDiri>?> getDataKehamilan() async {
     try {
       final response = await http.get(Uri.parse(UrlGetDataKehamilan));
 
@@ -68,11 +84,11 @@ class RepositoryDatadiri {
   }
 
   Future UpdateDataDiri(
-      String id_datadiri, id_pengguna, String nama_lengkap, String tgl_lahir,  String alamat,
+      String id_datadiri,String id_pengguna, String nama_lengkap, String tgl_lahir,  String alamat,
       String pekerjaan, String pendidikan, String nama_suami, String usia_suami,
       String pekerjaan_suami, String agama, String no_telp) async {
     try {
-      final response = await http.post(Uri.parse(UrlUpdateDataDiri), body: {
+      await http.post(Uri.parse(UrlUpdateDataDiri), body: {
 
         "id_datadiri": id_datadiri,
         "id_pengguna": id_pengguna,

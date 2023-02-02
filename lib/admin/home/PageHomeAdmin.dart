@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sistem_pakar_kspr/admin/home/aturanforwardchaining/list_aturan.dart';
 import 'package:sistem_pakar_kspr/admin/home/pengguna/list_user.dart';
-import 'package:sistem_pakar_kspr/beratjanin/cek_berat_janin.dart';
-import 'package:sistem_pakar_kspr/certaintyfactor/diagnosaCF.dart';
 import 'package:sistem_pakar_kspr/icon/MyIcon.dart';
 import 'package:sistem_pakar_kspr/info/info_admin.dart';
+import 'package:sistem_pakar_kspr/riwayatskrining/ModelRiwayat.dart';
+import 'package:sistem_pakar_kspr/riwayatskrining/RepositoryRiwayat.dart';
 import 'package:sistem_pakar_kspr/riwayatskrining/riwayat_skrining.dart';
-import 'package:sistem_pakar_kspr/usiakandungan/cek_usia_kandungan.dart';
-
 import 'diagnosa/list_diagnosa.dart';
 import 'gejala/list_gejala.dart';
 
@@ -20,6 +18,26 @@ class PageHomeAdmin extends StatefulWidget {
 }
 
 class _PageHomeAdminState extends State<PageHomeAdmin> {
+  List<DataRiwayat> listDataPersentaseCF = [];
+  List<DataRiwayat> listDataPersentaseFC = [];
+  List<DataRiwayat> listDataRegisterUser = [];
+  RepositoryRiwayat repositoryDataPersentase = RepositoryRiwayat();
+  getDataPersentase() async {
+    listDataPersentaseCF =
+        await repositoryDataPersentase.getDataPersentaseRiwayatCF();
+    listDataPersentaseFC =
+        await repositoryDataPersentase.getDataPersentaseRiwayatFC();
+    listDataRegisterUser =
+        await repositoryDataPersentase.getDataJumlahRegister();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    getDataPersentase();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +61,10 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 65),
-            Center(
+            SizedBox(height: 35),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
               child: Container(
-                width: 350,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -65,7 +83,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 50,
+                          width: 60,
                         ),
                         Column(children: [
                           FlatButton(
@@ -96,7 +114,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                           ),
                         ]),
                         SizedBox(
-                          width: 63,
+                          width: 75,
                         ),
                         Column(children: [
                           FlatButton(
@@ -132,7 +150,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 40,
+                          width: 47,
                         ),
                         Column(children: [
                           FlatButton(
@@ -163,7 +181,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                           ),
                         ]),
                         SizedBox(
-                          width: 44,
+                          width: 51,
                         ),
                         Column(children: [
                           FlatButton(
@@ -183,7 +201,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                                 ),
                                 Text(
                                   '       Data Aturan\n'
-                                      'Forward Chaining',
+                                  'Forward Chaining',
                                   style: TextStyle(
                                     fontSize: 10,
                                     fontFamily: 'Ubuntu',
@@ -200,7 +218,7 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                     Row(
                       children: [
                         SizedBox(
-                          width: 50,
+                          width: 58,
                         ),
                         Column(children: [
                           FlatButton(
@@ -231,10 +249,9 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                           ),
                         ]),
                         SizedBox(
-                          width: 60,
+                          width: 69,
                         ),
                         Column(children: [
-
                           FlatButton(
                             onPressed: () => {
                               Navigator.push(
@@ -269,6 +286,123 @@ class _PageHomeAdminState extends State<PageHomeAdmin> {
                 ),
               ),
             ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 0,
+                      blurRadius: 1.5,
+                      offset: Offset(0, 0),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listDataRegisterUser.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return Row(
+                              children: [
+                                Text(
+                                  "Jumlah pengguna yang sudah register = ${listDataRegisterUser[index].jumlah_register}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                "Persentase Metode Certainty Factor",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listDataPersentaseCF.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return Row(
+                              children: [
+                                Text(
+                                  "R0${listDataPersentaseCF[index].id_diagnosa} jumlah data ${listDataPersentaseCF[index].jumlah_1} = ${listDataPersentaseCF[index].persentaseCF}%",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Persentase Metode Forward Chaining",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              fontFamily: 'Ubuntu',
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listDataPersentaseFC.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return Row(
+                              children: [
+                                Text(
+                                  "R0${listDataPersentaseFC[index].id_diagnosa} jumlah data ${listDataPersentaseFC[index].orang} = ${listDataPersentaseFC[index].persentaseCF}%",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
           ],
         ),
       ),

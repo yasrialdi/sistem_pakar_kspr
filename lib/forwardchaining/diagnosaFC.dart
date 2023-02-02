@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/diagnosaRepository.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/gejalaModel.dart';
+import 'package:sistem_pakar_kspr/certaintyfactor/hasilDiagnosa.dart';
 
-class PageDiagnosaFC extends StatefulWidget {
-  const PageDiagnosaFC({Key? key}) : super(key: key);
+class PageSkriningDiagnosa extends StatefulWidget {
+  const PageSkriningDiagnosa({Key? key}) : super(key: key);
 
   @override
-  State<PageDiagnosaFC> createState() => _PageDiagnosaFCState();
+  State<PageSkriningDiagnosa> createState() => _PageSkriningDiagnosaState();
 }
 
-class _PageDiagnosaFCState extends State<PageDiagnosaFC> {
+class _PageSkriningDiagnosaState extends State<PageSkriningDiagnosa> {
   List<Gejala> listGejala = [];
   late List<bool> _isChecked;
   RepositoryGejalaDiagnosa repository = RepositoryGejalaDiagnosa();
@@ -163,43 +164,144 @@ class _PageDiagnosaFCState extends State<PageDiagnosaFC> {
                                   setState(
                                         () {
                                       _isChecked[index] = val!;
-                                    },
+                                      _isChecked[0] = true;
+
+                                      if(_isChecked[1]){
+                                        _isChecked[2] = !_isChecked[1] ;
+                                        _isChecked[3] = !_isChecked[1] ;
+                                        _isChecked[4] = !_isChecked[1] ;
+                                        _isChecked[5] = !_isChecked[1] ;
+                                        _isChecked[6] = !_isChecked[1] ;
+                                        _isChecked[7] = !_isChecked[1] ;
+                                        _isChecked[10] = !_isChecked[1] ;
+                                        _isChecked[11] = !_isChecked[1] ;
+                                        _isChecked[12] = !_isChecked[1] ;
+                                        _isChecked[13] = !_isChecked[1] ;
+                                      }
+
+                                      if(_isChecked[2]){
+                                        _isChecked[1] = !_isChecked[2];
+                                        _isChecked[4] = !_isChecked[2];
+                                        _isChecked[5] = !_isChecked[2];
+                                        _isChecked[6] = !_isChecked[2];
+                                        _isChecked[10] = !_isChecked[2];
+                                        _isChecked[11] = !_isChecked[2];
+                                        _isChecked[12] = !_isChecked[2];
+                                        _isChecked[13] = !_isChecked[2];
+                                      }
+
+                                      if(_isChecked[3]){
+                                        _isChecked[1] = !_isChecked[3];
+                                        _isChecked[4] = !_isChecked[3];
+                                        _isChecked[5] = !_isChecked[3];
+                                        _isChecked[6] = !_isChecked[3];
+                                        _isChecked[10] = !_isChecked[3];
+                                        _isChecked[11] = !_isChecked[3];
+                                        _isChecked[12] = !_isChecked[3];
+                                        _isChecked[13] = !_isChecked[3];
+                                      }
+
+                                      if(_isChecked[4]){
+                                        _isChecked[1] = !_isChecked[4];
+                                        _isChecked[2] = !_isChecked[4];
+                                        _isChecked[3] = !_isChecked[4];
+                                        _isChecked[5] = !_isChecked[4];
+                                      }
+
+                                      if(_isChecked[5]){
+                                        _isChecked[1] = !_isChecked[5];
+                                        _isChecked[2] = !_isChecked[5];
+                                        _isChecked[3] = !_isChecked[5];
+                                        _isChecked[4] = !_isChecked[5];
+                                      }
+
+                                      if(_isChecked[6]){
+                                        _isChecked[1] = !_isChecked[6];
+                                        _isChecked[2] = !_isChecked[6];
+                                        _isChecked[3] = !_isChecked[6];
+                                      }
+
+                                      if(_isChecked[7]){
+                                        _isChecked[1] = !_isChecked[7];
+                                      }
+
+                                      if(_isChecked[25]){
+                                        _isChecked[26] = !_isChecked[25];
+                                      }
+
+                                      if(_isChecked[26]){
+                                        _isChecked[25] = !_isChecked[26];
+                                      }
+
+                                      // else{
+                                      //   _isChecked[2] = val!;
+                                      // }
+                                        },
                                   );
                                 },
+
+
                               );
                             },
                           ),
                         ),SizedBox(height: 10),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pinkAccent,
-                          ),
+                        MaterialButton(
                           onPressed: () async {
-                            if (formKey.currentState!.validate()){
+                            if (formKey.currentState!.validate()) {
                               setState(() {
                                 isloading = true;
                               });
-                              List<int> hasilArray = _isChecked.map((e) => e? 1 : 0).toList();
+                              List<int> hasilArray =
+                              _isChecked.map((e) => e ? 1 : 0).toList();
                               List<String> hasilGejala = [];
-                              for(var i = 0; i<hasilArray.length; i++){
-                                if (hasilArray[i] == 1){
+                              for (var i = 0; i < hasilArray.length; i++) {
+                                if (hasilArray[i] == 1) {
                                   hasilGejala.add(listGejala[i].id_gejala);
                                 }
                               }
                               String hasil = hasilArray.join("#");
                               String hasil2 = hasilGejala.join("#");
-                              print(hasil);
-                              String id_pengguna = preferences.getString("id_pengguna")!;
-                              print(id_pengguna);
+                              String id_pengguna =
+                              preferences.getString("id_pengguna")!;
 
-                              await repository.postDataTambahFC(id_pengguna,hasil2);
-                              //
-                              //
-                              // Navigator.of(context).pushReplacement(
-                              //     MaterialPageRoute(builder: (context) => PageNavBottomBarAdmin()));
+                              var responsecf = await repository
+                                  .postDataTambahCF(id_pengguna, hasil);
+                              var responsefc = await repository
+                                  .postDataTambahFC(id_pengguna, hasil2);
+
+                              print(responsecf["id_diagnosa"]);
+                              print(responsefc["id_diagnosa"]);
+
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => PageHasilDiagnosa(
+                                        idcf: responsecf["id_diagnosa"],
+                                        idfc: responsefc["id_diagnosa"],
+                                        nama_diagnosacf:
+                                        responsecf["nama_diagnosa"],
+                                        nilaicf: responsecf["nilai"],
+                                        nama_diagnosafc:
+                                        responsefc["nama_diagnosa"],
+                                        nilaifc: responsefc["nilai"],
+                                      )));
                             }
                           },
-                          child: Text(
+                          color: Colors.pinkAccent,
+                          height: 35,
+                          minWidth: 100,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: (isloading)
+                              ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 1.5,
+                              ))
+                              : const Text(
                             'SIMPAN',
                             style: TextStyle(
                                 fontSize: 14,

@@ -6,14 +6,14 @@ import 'package:sistem_pakar_kspr/certaintyfactor/diagnosaRepository.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/gejalaModel.dart';
 import 'package:sistem_pakar_kspr/certaintyfactor/hasilDiagnosa.dart';
 
-class PageCFcoba extends StatefulWidget {
-  const PageCFcoba({Key? key}) : super(key: key);
+class PageDiagnosaFinal extends StatefulWidget {
+  const PageDiagnosaFinal({Key? key}) : super(key: key);
 
   @override
-  State<PageCFcoba> createState() => _PageCFcobaState();
+  State<PageDiagnosaFinal> createState() => _PageDiagnosaFinalState();
 }
 
-class _PageCFcobaState extends State<PageCFcoba> {
+class _PageDiagnosaFinalState extends State<PageDiagnosaFinal> {
   List<Gejala> listGejala = [];
   late List<bool> _isChecked;
   RepositoryGejalaDiagnosa repository = RepositoryGejalaDiagnosa();
@@ -197,8 +197,77 @@ class _PageCFcobaState extends State<PageCFcoba> {
                                 value: _isChecked[index],
                                 onChanged: (val) {
                                   if (index > 0) {
-                                    setState(() => _isChecked[index] = val!);
+                                    setState(() =>
+                                    _isChecked[index] = val!);
                                   }
+
+                                  if(_isChecked[1]){
+                                    _isChecked[2] = !_isChecked[1] ;
+                                    _isChecked[3] = !_isChecked[1] ;
+                                    _isChecked[4] = !_isChecked[1] ;
+                                    _isChecked[5] = !_isChecked[1] ;
+                                    _isChecked[6] = !_isChecked[1] ;
+                                    _isChecked[7] = !_isChecked[1] ;
+                                    _isChecked[10] = !_isChecked[1] ;
+                                    _isChecked[11] = !_isChecked[1] ;
+                                    _isChecked[12] = !_isChecked[1] ;
+                                    _isChecked[13] = !_isChecked[1] ;
+                                  }
+
+                                  if(_isChecked[2]){
+                                    _isChecked[1] = !_isChecked[2];
+                                    _isChecked[4] = !_isChecked[2];
+                                    _isChecked[5] = !_isChecked[2];
+                                    _isChecked[6] = !_isChecked[2];
+                                    _isChecked[10] = !_isChecked[2];
+                                    _isChecked[11] = !_isChecked[2];
+                                    _isChecked[12] = !_isChecked[2];
+                                    _isChecked[13] = !_isChecked[2];
+                                  }
+
+                                  if(_isChecked[3]){
+                                    _isChecked[1] = !_isChecked[3];
+                                    _isChecked[4] = !_isChecked[3];
+                                    _isChecked[5] = !_isChecked[3];
+                                    _isChecked[6] = !_isChecked[3];
+                                    _isChecked[10] = !_isChecked[3];
+                                    _isChecked[11] = !_isChecked[3];
+                                    _isChecked[12] = !_isChecked[3];
+                                    _isChecked[13] = !_isChecked[3];
+                                  }
+
+                                  if(_isChecked[4]){
+                                    _isChecked[1] = !_isChecked[4];
+                                    _isChecked[2] = !_isChecked[4];
+                                    _isChecked[3] = !_isChecked[4];
+                                    _isChecked[5] = !_isChecked[4];
+                                  }
+
+                                  if(_isChecked[5]){
+                                    _isChecked[1] = !_isChecked[5];
+                                    _isChecked[2] = !_isChecked[5];
+                                    _isChecked[3] = !_isChecked[5];
+                                    _isChecked[4] = !_isChecked[5];
+                                  }
+
+                                  if(_isChecked[6]){
+                                    _isChecked[1] = !_isChecked[6];
+                                    _isChecked[2] = !_isChecked[6];
+                                    _isChecked[3] = !_isChecked[6];
+                                  }
+
+                                  if(_isChecked[7]){
+                                    _isChecked[1] = !_isChecked[7];
+                                  }
+
+                                  if(_isChecked[25]){
+                                    _isChecked[26] = !_isChecked[25];
+                                  }
+
+                                  if(_isChecked[26]){
+                                    _isChecked[25] = !_isChecked[26];
+                                  }
+
                                 },
                               );
                             },

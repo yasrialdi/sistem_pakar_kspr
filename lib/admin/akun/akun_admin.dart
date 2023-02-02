@@ -97,151 +97,149 @@ class _PageAkunAdminState extends State<PageAkunAdmin> {
         child: Column(
           children: [
             SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-              child: Stack(alignment: Alignment.center, children: [
-                Positioned(
-                  bottom: 0,
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(
-                            'images/person.png'),
-                        // child:
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        username,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Ubuntu',
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.white,
                 ),
-              ]),
-            ),
-            SizedBox(height: 8),
-            SizedBox(height: 10),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 0,
-                    blurRadius: 1.5,
-                    offset: Offset(0, 0),
-                  )
-                ],
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 45,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 18, right: 9),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Detail',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-
-                            ),
+                height: 200,
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+                child: Stack(alignment: Alignment.center, children: [
+                  Positioned(
+                    bottom: 0,
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage(
+                              'images/person.png'),
+                          // child:
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          username,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black,
                           ),
-                          InkWell(
-                            onTap: () {
-                              _changed(true, '2');
-                            },
-                            child: visibility2
-                                ? InkWell(
+                        ),
+                      ],
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 45,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 18, right: 9),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Detail',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+
+                              ),
+                            ),
+                            InkWell(
                               onTap: () {
-                                _changed(false, '2');
+                                _changed(true, '2');
                               },
-                              child: Icon(
-                                Icons.keyboard_arrow_up_sharp,
+                              child: visibility2
+                                  ? InkWell(
+                                onTap: () {
+                                  _changed(false, '2');
+                                },
+                                child: Icon(
+                                  Icons.keyboard_arrow_up_sharp,
+                                  color: Colors.black,
+                                ),
+                              )
+                                  : Icon(
+                                Icons.keyboard_arrow_right_sharp,
                                 color: Colors.black,
                               ),
                             )
-                                : Icon(
-                              Icons.keyboard_arrow_right_sharp,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Visibility(
-                    visible: visibility2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 18, right: 9),
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Username    : ${username}\n'
-                                 'Level             : ${level}'
-                            ),
-                            SizedBox(height: 15)
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 0.5,
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: ListTile(
-                      onTap: () {
-                        logOut(context);
-                      },
-                      leading: Icon(
-                        Icons.logout,
-                        color: Colors.pinkAccent,
-                      ),
-                      minLeadingWidth: 5,
-                      title: Text(
-                        'Logout',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Ubuntu',
-                            fontWeight: FontWeight.w200,
-                            color: Colors.black),
+                    Visibility(
+                      visible: visibility2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 18, right: 9),
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Username    : ${username}\n'
+                                   'Level             : ${level}'
+                              ),
+                              SizedBox(height: 15)
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 15,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 0.5,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 0.5,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                ],
+                    Container(
+                      height: 40,
+                      child: ListTile(
+                        onTap: () {
+                          logOut(context);
+                        },
+                        leading: Icon(
+                          Icons.logout,
+                          color: Colors.pinkAccent,
+                        ),
+                        minLeadingWidth: 5,
+                        title: Text(
+                          'Logout',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w200,
+                              color: Colors.black),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Divider(
+                        color: Colors.grey,
+                        thickness: 0.5,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
               ),
             ),
           ],

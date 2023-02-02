@@ -8,22 +8,36 @@ import 'package:sistem_pakar_kspr/admin/home/gejala/Model_Gejala.dart';
 import 'package:sistem_pakar_kspr/beratjanin/model_tbj.dart';
 
 class RepositoryTBJ {
-  final baseUrl = 'http://spkspr.infinityfreeapp.com/getdatatbj.php';
+  final baseUrl = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/get_data_tbj.php';
   final UrlTambahtbj = 'https://ibuhamil.hidra-lab.my.id/proyekakhir/tambah_data_tbj.php';
 
-  // Future getDataTBJ() async {
+  // Future<List<DataTBJ>?> getDataTBJ() async {
   //   try {
   //     final response = await http.get(Uri.parse(baseUrl));
   //
   //     if (response.statusCode == 200) {
   //       Iterable it = jsonDecode(response.body);
-  //       List<DataTBJ> datatbj = it.map((e) => DataTBJ.fromJson(e)).toList();
-  //       return datatbj;
+  //       List<DataTBJ> dataTBJ = it.map((e) => DataTBJ.fromJson(e)).toList();
+  //       return dataTBJ;
   //     }
   //   } catch (e) {
   //     print(e.toString());
   //   }
   // }
+
+  Future getDataTBJ() async {
+    try {
+      final response = await http.get(Uri.parse(baseUrl));
+
+      if (response.statusCode == 200) {
+        Iterable it = jsonDecode(response.body);
+        List<DataTBJ> dataTBJ = it.map((e) => DataTBJ.fromJson(e)).toList();
+        return dataTBJ;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   // Future<bool> deletegejala(String id) async {
   //   try {
